@@ -12,7 +12,6 @@ namespace ClassLibrary1.Implementations
     {
        
         private VideoCapture _capture = null;
-        private Mat _frame =  new Mat();
         private double processingTime;
         private int frameRate = 1;
         private DateTimeOffset last = new DateTimeOffset(DateTime.Now);
@@ -31,8 +30,15 @@ namespace ClassLibrary1.Implementations
         {
             if (_capture != null && _capture.Ptr != IntPtr.Zero)
             {
-                _capture.Retrieve(_frame, 0);
-                NotifyNow();
+                Mat mat = new Mat();
+                _capture.Retrieve(mat);
+
+                if (mat == null || mat.IsEmpty)
+                {
+                    _capture.Stop();
+                    return;
+                }
+                NotifyNow(mat);
             }
             processingTime = ((new DateTimeOffset(DateTime.Now)) - last).TotalMilliseconds;
             var waitTime = (1000 / frameRate) - (int)processingTime;
@@ -41,13 +47,13 @@ namespace ClassLibrary1.Implementations
             last = new DateTimeOffset(DateTime.Now);
         }
 
-        private void NotifyNow()
+        private void NotifyNow(Mat mat)
         {
             var handler = MatReady;
             if (handler == null)
                 return;
 
-            handler(this, new MatReadyCompletedArgs(_frame, processingTime));
+            handler(this, new MatReadyCompletedArgs(mat, processingTime));
         }
 
         public void Pause()

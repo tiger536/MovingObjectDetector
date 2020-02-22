@@ -7,19 +7,16 @@ using System.Text;
 
 namespace ClassLibrary1.Implementations
 {
-    public class GrayScaleConverter : IMatOperation
+    public class Thresolder : IMatOperation
     {
         private Mat frame;
-        private Mat output;
-
-        public GrayScaleConverter(Mat mat, Mat output)
+        public Thresolder(Mat mat)
         {
             frame = mat;
-            this.output = output;
         }
         public void Execute()
         {
-            CvInvoke.CvtColor(frame, output, ColorConversion.Bgr2Gray);
+            CvInvoke.Threshold(frame, frame, 25, 255, ThresholdType.Binary);
         }
     }
 }

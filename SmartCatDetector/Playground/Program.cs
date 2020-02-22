@@ -1,5 +1,7 @@
 ﻿using ClassLibrary1;
 using ClassLibrary1.Implementations;
+using ClassLibrary1.MatQueuer;
+using ClassLibrary1.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,8 @@ namespace Playground
         static void Main()
         {
             DependencyInjector.AddSingleton<IMatReady, VideoMat>();
+            DependencyInjector.AddSingleton<IDnnProvider, DnnProvider>();
+            DependencyInjector.AddSingleton<IWorker, Worker>();
             //DependencyInjector.AddSingleton<IMatReady, CameraMat>();
 
 
