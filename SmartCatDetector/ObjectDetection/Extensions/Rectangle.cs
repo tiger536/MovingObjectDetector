@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace ObjectDetection.Extensions
 {
@@ -17,18 +18,24 @@ namespace ObjectDetection.Extensions
             return r1.IntersectsWith(r2);
         }
 
+        public static Rectangle MakeItSquare(this Rectangle rect)
+        {       
+            var max = Math.Max(rect.Width, rect.Height);
+            return new Rectangle(rect.X, rect.Y, max, max);
+        }
+
         public static Rectangle ResizeToFitMat(this Rectangle rect, int matWidth, int matHeight)
         {
             if (rect.X < 0) rect.X = 0;
             if (rect.Y < 0) rect.Y = 0;
 
-            if(rect.X + rect.Width >= matWidth)
+            if (rect.X + rect.Width >= matWidth)
             {
                 rect.Width = matWidth - rect.X - 1;
             }
 
             if (rect.Y + rect.Height >= matHeight)
-            {               
+            {
                 rect.Height = matHeight - rect.Y - 1;
             }
             return new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);

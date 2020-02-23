@@ -74,6 +74,7 @@ namespace ObjectDetection.Implementations
                 }
             }
 
+            tensors.Dispose();
             return dnnOutput;
         }
 

@@ -35,12 +35,12 @@ namespace ObjectDetection.MatQueuer
             RotateImageClockwise = Convert.ToInt32(ConfigurationManager.AppSettings["RotateImageClockwise"]);
             matQueuer = new FixedSizeQueue<Mat>(MaxSize);
             TaskCancellationTokenSource = new CancellationTokenSource();
-            Processor = Task.Run(async () => await Start(TaskCancellationTokenSource.Token));           
+            Processor = Task.Run(async () => await Start(TaskCancellationTokenSource.Token));
         }
 
         private async Task Start(CancellationToken token)
         {
-            while(true)
+            while (true)
             {
                 try
                 {
@@ -53,7 +53,7 @@ namespace ObjectDetection.MatQueuer
                     var watch = System.Diagnostics.Stopwatch.StartNew();
                     var matList = matQueuer.DequeueAll(); // index 0 is oldest Mat
                     var oldestFrame = matList[0];
-                    var newestFrame = matList[MaxSize - 1];                  
+                    var newestFrame = matList[MaxSize - 1];
 
                     if (RotateImageClockwise > 0)
                     {
@@ -115,7 +115,7 @@ namespace ObjectDetection.MatQueuer
                     if (puntiFinali.Size > 0)
                     {
                         var finalRect = CvInvoke.BoundingRectangle(puntiFinali);
-                        finalRect.Inflate((int)(finalRect.Width * 0.21),(int) (finalRect.Height * 0.21));
+                        finalRect.Inflate((int)(finalRect.Width * 0.21), (int)(finalRect.Height * 0.21));
                         finalRect = finalRect.ResizeToFitMat(newestFrame.Width, newestFrame.Height);
 #if DEBUG
                         testMat = new Mat(newestFrame, finalRect).Clone();
@@ -126,7 +126,7 @@ namespace ObjectDetection.MatQueuer
                         if (results.ClassesList.Any())
                         {
                             CvInvoke.Rectangle(newestFrame, finalRect, new MCvScalar(0, 0, 255), 5);
-                            CvInvoke.PutText(newestFrame, results.bestIndex >= 0 ? $"{(results.ClassesList[results.bestIndex]).ToUpper()} {Math.Round(results.ConfidenceList[results.bestIndex] * 100)/100}" : String.Empty,
+                            CvInvoke.PutText(newestFrame, results.bestIndex >= 0 ? $"{(results.ClassesList[results.bestIndex]).ToUpper()} {Math.Round(results.ConfidenceList[results.bestIndex] * 100) / 100}" : String.Empty,
                                 new Point(finalRect.X - 10, finalRect.Y - 10), FontFace.HersheySimplex, 1.5, new MCvScalar(0, 0, 255), 3);
                         }
 #endif
@@ -135,11 +135,11 @@ namespace ObjectDetection.MatQueuer
                         {
                             NewestMat = newestFrame,
                             TestMat = testMat,
-                            BestMatch = results.bestIndex >=0 ? results.ClassesList[results.bestIndex]: String.Empty,
+                            BestMatch = results.bestIndex >= 0 ? results.ClassesList[results.bestIndex] : String.Empty,
                             BestConfidence = results.bestIndex >= 0 ? results.ConfidenceList[results.bestIndex] : 0.0f,
                             ProcessingTime = watch.ElapsedMilliseconds,
                             DectectionOut = results.ClassesList
-                        }) ;
+                        });
 
 
                     }
@@ -176,7 +176,7 @@ namespace ObjectDetection.MatQueuer
 
         private RotateFlags GetRotateFlags()
         {
-            switch(RotateImageClockwise)
+            switch (RotateImageClockwise)
             {
                 case 90:
                 default:
