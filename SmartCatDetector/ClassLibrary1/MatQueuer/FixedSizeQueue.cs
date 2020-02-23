@@ -30,7 +30,9 @@ namespace ObjectDetection.Implementations
             {
                 lock(lockObkect)
                 {
-                    while (base.Count >= _maxSize) { var a = Dequeue(); a.Dispose(); }
+                    while (base.Count >= _maxSize)
+                        Dequeue().Dispose(); 
+
                     base.Enqueue(obj);
                 }
             }

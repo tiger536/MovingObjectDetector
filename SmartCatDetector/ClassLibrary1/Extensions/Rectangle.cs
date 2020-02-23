@@ -19,6 +19,9 @@ namespace ObjectDetection.Extensions
 
         public static Rectangle ResizeToFitMat(this Rectangle rect, int matWidth, int matHeight)
         {
+            if (rect.X < 0) rect.X = 0;
+            if (rect.Y < 0) rect.Y = 0;
+
             if(rect.X + rect.Width >= matWidth)
             {
                 rect.Width = matWidth - rect.X - 1;

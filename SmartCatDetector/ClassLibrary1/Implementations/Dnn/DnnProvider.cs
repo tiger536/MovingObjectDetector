@@ -31,7 +31,6 @@ namespace ObjectDetection.Implementations
 
         public void SetInputMat( Mat myMat)
         {
-            CvInvoke.Rotate(myMat, myMat, RotateFlags.Rotate90Clockwise);
             Mat blob = DnnInvoke.BlobFromImage(myMat, 0.00392, new Size(416, 416), new MCvScalar(0, 0, 0), true, false);
             if(blob == null | blob.IsEmpty)
             {
