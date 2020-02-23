@@ -1,11 +1,7 @@
-﻿using ClassLibrary1.Models;
+﻿using ObjectDetection.Models;
 using Emgu.CV;
-using Emgu.CV.CvEnum;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ClassLibrary1.Implementations
+namespace ObjectDetection.Implementations
 {
     public class GaussianBlur : IMatOperation
     {
@@ -16,7 +12,7 @@ namespace ClassLibrary1.Implementations
         }
         public void Execute()
         {
-            CvInvoke.GaussianBlur(frame, frame, new System.Drawing.Size(5,5), 0.0);
+            CvInvoke.GaussianBlur(frame, frame, new System.Drawing.Size(7,7), 0.0);
         }
     }
 }

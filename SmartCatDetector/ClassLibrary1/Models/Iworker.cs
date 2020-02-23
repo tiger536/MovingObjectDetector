@@ -1,10 +1,8 @@
-﻿using ClassLibrary1.Implementations;
+﻿using ObjectDetection.Implementations;
 using Emgu.CV;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace ClassLibrary1
+namespace ObjectDetection
 {
     public interface IWorker
     {      

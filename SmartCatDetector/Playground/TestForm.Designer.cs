@@ -1,6 +1,6 @@
 ﻿namespace Playground
 {
-    partial class CameraCapture
+    partial class TestForm
     {
         /// <summary>
         /// Required designer variable.
@@ -93,13 +93,13 @@
             this.processingTime.AutoSize = true;
             this.processingTime.Location = new System.Drawing.Point(546, 17);
             this.processingTime.Name = "processingTime";
-            this.processingTime.Size = new System.Drawing.Size(88, 13);
+            this.processingTime.Size = new System.Drawing.Size(110, 13);
             this.processingTime.TabIndex = 3;
-            this.processingTime.Text = "Processing Time:";
+            this.processingTime.Text = "Processing Time (ms):";
             // 
             // processingTimeBox
             // 
-            this.processingTimeBox.Location = new System.Drawing.Point(640, 14);
+            this.processingTimeBox.Location = new System.Drawing.Point(662, 14);
             this.processingTimeBox.Name = "processingTimeBox";
             this.processingTimeBox.Size = new System.Drawing.Size(100, 20);
             this.processingTimeBox.TabIndex = 2;
@@ -238,13 +238,13 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Output Image:";
             // 
-            // CameraCapture
+            // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(842, 832);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "CameraCapture";
+            this.Name = "TestForm";
             this.Text = "Camera Capture";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();

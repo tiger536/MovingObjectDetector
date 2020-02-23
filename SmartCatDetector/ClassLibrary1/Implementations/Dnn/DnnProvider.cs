@@ -1,5 +1,5 @@
-﻿using ClassLibrary1.Implementations.Dnn;
-using ClassLibrary1.Models;
+﻿using ObjectDetection.Implementations.Dnn;
+using ObjectDetection.Models;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Dnn;
@@ -11,28 +11,22 @@ using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 
-namespace ClassLibrary1.Implementations
+namespace ObjectDetection.Implementations
 {
     public class DnnProvider : IDnnProvider
     {
-        private Net net;
+        private readonly Net net;
         private readonly List<string> ListaClassi;
 
         public DnnProvider()
         {
             ListaClassi = File.ReadAllLines(ConfigurationManager.AppSettings["DnnClassesPath"]).ToList<string>();
-            net = Emgu.CV.Dnn.DnnInvoke.ReadNetFromDarknet(ConfigurationManager.AppSettings["DnnConfigPath"], ConfigurationManager.AppSettings["DnnWeightsPath"]);
+            net = DnnInvoke.ReadNetFromDarknet(ConfigurationManager.AppSettings["DnnConfigPath"], ConfigurationManager.AppSettings["DnnWeightsPath"]);
             if (net.Empty)
             {
                 throw new Exception("Can't load network!");
             }
-        }
-
-        public void SetNet()
-        {
-
         }
 
         public void SetInputMat( Mat myMat)
@@ -63,7 +57,7 @@ namespace ClassLibrary1.Implementations
                     var boxData = GetRow(boxesData, i);
                     var confidence = boxData.Skip(5).Max();
 
-                    if (confidence > 0.3)
+                    if (confidence > 0.4)
                     {
                         dnnOutput.ConfidenceList.Add(confidence);
                         dnnOutput.ClassesList.Add(ListaClassi[boxData.ToList().IndexOf(confidence) - 5]);

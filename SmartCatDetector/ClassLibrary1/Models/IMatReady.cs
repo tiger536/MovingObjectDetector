@@ -1,8 +1,8 @@
-﻿using ClassLibrary1.Implementations;
+﻿using ObjectDetection.Implementations;
 using Emgu.CV;
 using System;
 
-namespace ClassLibrary1
+namespace ObjectDetection
 {
     public interface IMatReady
     {      

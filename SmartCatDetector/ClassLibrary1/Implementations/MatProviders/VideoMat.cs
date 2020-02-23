@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ClassLibrary1.Implementations
+namespace ObjectDetection.Implementations
 {
     public class VideoMat : IMatReady
     {

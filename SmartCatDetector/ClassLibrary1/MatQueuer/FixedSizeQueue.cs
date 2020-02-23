@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace ClassLibrary1.Implementations
+namespace ObjectDetection.Implementations
 {
     public class FixedSizeQueue<T> : Queue<T>
         where T: IDisposable

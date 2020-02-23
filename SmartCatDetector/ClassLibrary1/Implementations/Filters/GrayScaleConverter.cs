@@ -1,11 +1,11 @@
-﻿using ClassLibrary1.Models;
+﻿using ObjectDetection.Models;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ClassLibrary1.Implementations
+namespace ObjectDetection.Implementations
 {
     public class GrayScaleConverter : IMatOperation
     {

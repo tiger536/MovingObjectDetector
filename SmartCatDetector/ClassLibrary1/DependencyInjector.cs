@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ClassLibrary1
+namespace ObjectDetection
 {
     public static class DependencyInjector
     {

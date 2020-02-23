@@ -1,7 +1,7 @@
-﻿using ClassLibrary1.Extensions;
-using ClassLibrary1.Implementations;
-using ClassLibrary1.Implementations.Filters;
-using ClassLibrary1.Models;
+﻿using ObjectDetection.Extensions;
+using ObjectDetection.Implementations;
+using ObjectDetection.Implementations.Filters;
+using ObjectDetection.Models;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
@@ -11,11 +11,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ClassLibrary1.MatQueuer
+namespace ObjectDetection.MatQueuer
 {
     public class Worker : IWorker
     {
@@ -49,6 +48,7 @@ namespace ClassLibrary1.MatQueuer
                         continue;
                     }
 
+                    var watch = System.Diagnostics.Stopwatch.StartNew();
                     var matList = matQueuer.DequeueAll(); // index 0 is oldest Mat
                     var oldestFrame = matList[0];
                     var newestFrame = matList[MaxSize - 1];
@@ -72,7 +72,6 @@ namespace ClassLibrary1.MatQueuer
                     }
 
                     VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
-                    //VectorOfVectorOfPoint contoursOut = new VectorOfVectorOfPoint();
                     var diz2 = new List<Rectangle>();
                     var puntiFinali = new VectorOfPoint();
                     CvInvoke.FindContours(mat, contours, new Mat(), RetrType.External, ChainApproxMethod.ChainApproxSimple);
@@ -81,7 +80,6 @@ namespace ClassLibrary1.MatQueuer
                     {
                         var contourApprox = new VectorOfPoint();
                         CvInvoke.ApproxPolyDP(contours[i], contourApprox, CvInvoke.ArcLength(contours[i], true) * 0.02, true);
-                        //contoursOut.Push(contourApprox);
 
                         var rect = CvInvoke.BoundingRectangle(contourApprox);
 
@@ -109,10 +107,10 @@ namespace ClassLibrary1.MatQueuer
                     if (puntiFinali.Size > 0)
                     {
                         var finalRect = CvInvoke.BoundingRectangle(puntiFinali);
+                        finalRect.Inflate((int)(finalRect.Width * 0.2),(int) (finalRect.Height * 0.2));
                         finalRect = finalRect.ResizeToFitMat(newestFrame.Width, newestFrame.Height);
                         
                         uff = new Mat(newestFrame, finalRect);
-                        _provider.SetNet();
                         _provider.SetInputMat(new Mat(newestFrame, finalRect));
                         var results = _provider.Forward();
                         
@@ -122,13 +120,15 @@ namespace ClassLibrary1.MatQueuer
                             CvInvoke.Rotate(newestFrame, newestFrame, RotateFlags.Rotate90Clockwise);
                             CvInvoke.PutText(newestFrame, results.bestIndex >= 0 ? results.ClassesList[results.bestIndex] : String.Empty, finalRect.Location, FontFace.HersheySimplex, 10, new MCvScalar(255, 0, 0), 8);
                         }
-                           
 
+                        watch.Stop();
                         NotifyNow(new WorkerResultsReadyArgs()
                         {
                             NewestMat = newestFrame,
                             TestMat = uff,
                             BestMatch = results.bestIndex >=0 ? results.ClassesList[results.bestIndex]: String.Empty,
+                            BestConfidence = results.bestIndex >= 0 ? results.ConfidenceList[results.bestIndex] : 0.0f,
+                            ProcessingTime = watch.ElapsedMilliseconds,
                             DectectionOut = results.ClassesList
                         }) ;
 

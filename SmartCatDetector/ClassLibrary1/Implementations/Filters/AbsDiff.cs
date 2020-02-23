@@ -1,10 +1,10 @@
-﻿using ClassLibrary1.Models;
+﻿using ObjectDetection.Models;
 using Emgu.CV;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ClassLibrary1.Implementations.Filters
+namespace ObjectDetection.Implementations.Filters
 {
     public class AbsDiff : IMatOperation
     {

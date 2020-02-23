@@ -1,7 +1,7 @@
 ﻿using Emgu.CV;
 using System;
 
-namespace ClassLibrary1.Implementations
+namespace ObjectDetection.Implementations
 {
     public class MatReadyCompletedArgs : EventArgs
     {

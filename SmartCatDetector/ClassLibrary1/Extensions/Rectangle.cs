@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
+﻿using System.Drawing;
 
-namespace ClassLibrary1.Extensions
+namespace ObjectDetection.Extensions
 {
     public static class RectangleExtension
     {
